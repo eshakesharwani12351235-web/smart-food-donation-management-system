@@ -1,0 +1,295 @@
+{
+  "info": {
+    "name": "Smart Food Donation & Management System API",
+    "_postman_id": "7b8f9a2e-4d5c-482a-9f12-9c3f4e1b8a5d",
+    "description": "Comprehensive Postman Collection for MCA Backend Technology Mini Project: Smart Food Donation & Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "donorToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ngoToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "donationId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login as Admin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@smartfood.org\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login as Donor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"tajhotel@gmail.com\",\n  \"password\": \"donor123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login as NGO",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"contact@annakshetra.org\",\n  \"password\": \"ngo123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Register Donor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Green Garden Banquets\",\n  \"email\": \"greengarden@gmail.com\",\n  \"password\": \"pass1234\",\n  \"phone\": \"+91 9888877777\",\n  \"role\": \"donor\",\n  \"address\": \"Outer Ring Road, Bengaluru\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Register NGO",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Feed All Foundation\",\n  \"email\": \"feedall@ngo.org\",\n  \"password\": \"pass1234\",\n  \"phone\": \"+91 9777766666\",\n  \"role\": \"ngo\",\n  \"address\": \"HSR Layout, Bengaluru\",\n  \"organizationName\": \"Feed All Care Trust\",\n  \"registrationNumber\": \"NGO/KA/2024/0998\",\n  \"contactPerson\": \"Karan Varma\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{donorToken}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Donor Operations",
+      "item": [
+        {
+          "name": "Create Food Donation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{donorToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"foodName\": \"Paneer Tikka & Jeera Rice\",\n  \"category\": \"Cooked Meals\",\n  \"quantity\": \"15 kg\",\n  \"servings\": 45,\n  \"preparationTime\": \"2026-11-02T18:00:00.000Z\",\n  \"safeConsumptionDeadline\": \"2026-11-03T04:00:00.000Z\",\n  \"pickupAddress\": \"MG Road, Ashok Nagar, Bengaluru\",\n  \"contactNumber\": \"+91 9811223344\",\n  \"description\": \"Hot packed trays from corporate banquet\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/donations", "host": ["{{baseUrl}}"], "path": ["donations"] }
+          }
+        },
+        {
+          "name": "Get Donor Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{donorToken}}" }],
+            "url": { "raw": "{{baseUrl}}/donations/donor/stats", "host": ["{{baseUrl}}"], "path": ["donations", "donor", "stats"] }
+          }
+        },
+        {
+          "name": "Get My Donations List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{donorToken}}" }],
+            "url": { "raw": "{{baseUrl}}/donations/donor/my-donations", "host": ["{{baseUrl}}"], "path": ["donations", "donor", "my-donations"] }
+          }
+        },
+        {
+          "name": "Update Pending Donation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{donorToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": \"20 kg\",\n  \"servings\": 55\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/donations/{{donationId}}", "host": ["{{baseUrl}}"], "path": ["donations", "{{donationId}}"] }
+          }
+        },
+        {
+          "name": "Cancel Pending Donation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{donorToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Function schedule changed\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/donations/{{donationId}}/cancel", "host": ["{{baseUrl}}"], "path": ["donations", "{{donationId}}", "cancel"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. NGO Operations",
+      "item": [
+        {
+          "name": "Get Available Donations for NGOs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ngoToken}}" }],
+            "url": { "raw": "{{baseUrl}}/ngo/donations?category=Cooked Meals", "host": ["{{baseUrl}}"], "path": ["ngo", "donations"], "query": [{ "key": "category", "value": "Cooked Meals" }] }
+          }
+        },
+        {
+          "name": "Accept Food Donation (Atomic Concurrency Safe)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ngoToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"Volunteer vehicle dispatched for pickup at 7:30 PM\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ngo/accept/{{donationId}}", "host": ["{{baseUrl}}"], "path": ["ngo", "accept", "{{donationId}}"] }
+          }
+        },
+        {
+          "name": "Update Status to Collected",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ngoToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Collected\",\n  \"notes\": \"Food received from donor and loaded into van\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ngo/status/{{donationId}}", "host": ["{{baseUrl}}"], "path": ["ngo", "status", "{{donationId}}"] }
+          }
+        },
+        {
+          "name": "Update Status to Delivered",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ngoToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Delivered\",\n  \"notes\": \"Distributed 45 hot meals at Community Shelter\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ngo/status/{{donationId}}", "host": ["{{baseUrl}}"], "path": ["ngo", "status", "{{donationId}}"] }
+          }
+        },
+        {
+          "name": "Get NGO Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ngoToken}}" }],
+            "url": { "raw": "{{baseUrl}}/ngo/stats", "host": ["{{baseUrl}}"], "path": ["ngo", "stats"] }
+          }
+        },
+        {
+          "name": "Get My Accepted Pickups",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ngoToken}}" }],
+            "url": { "raw": "{{baseUrl}}/ngo/my-accepted", "host": ["{{baseUrl}}"], "path": ["ngo", "my-accepted"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Admin Operations",
+      "item": [
+        {
+          "name": "Admin Dashboard Analytics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/dashboard", "host": ["{{baseUrl}}"], "path": ["admin", "dashboard"] }
+          }
+        },
+        {
+          "name": "List All Registered Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/users", "host": ["{{baseUrl}}"], "path": ["admin", "users"] }
+          }
+        },
+        {
+          "name": "List All System Donations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/donations", "host": ["{{baseUrl}}"], "path": ["admin", "donations"] }
+          }
+        },
+        {
+          "name": "Delete User (Admin Only)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/users/:userId", "host": ["{{baseUrl}}"], "path": ["admin", "users", ":userId"] }
+          }
+        },
+        {
+          "name": "Delete Donation (Admin Only)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/donations/{{donationId}}", "host": ["{{baseUrl}}"], "path": ["admin", "donations", "{{donationId}}"] }
+          }
+        }
+      ]
+    }
+  ]
+}
